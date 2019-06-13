@@ -9,7 +9,7 @@
 
 In order to star application you need to execute next commands:
 
-Edit the file user.service.ts and set appId and serverUrl.
+Edit the file user.service.ts and set `appId` and `serverUrl`.
 
 * `npm install`
 * `npm start`
