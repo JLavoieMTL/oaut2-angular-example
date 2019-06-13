@@ -7,9 +7,11 @@ declare const FB:any;
 @Injectable()
 export class UserService {
 
+  server = `http://localhost:3000`
+
   constructor(private http: AuthHttp) {
     FB.init({
-      appId      : 'YOUR-APP-ID',
+      appId      : '',
       status     : false, // the SDK will attempt to get info about the current user immediately after init
       cookie     : false,  // enable cookies to allow the server to access
       // the session
@@ -22,7 +24,7 @@ export class UserService {
     return new Promise((resolve, reject) => {
       FB.login(result => {
         if (result.authResponse) {
-          return this.http.post(`http://localhost:3000/api/v1/auth/facebook`, {access_token: result.authResponse.accessToken})
+          return this.http.post(this.server + '/facebook', {access_token: result.authResponse.accessToken})
               .toPromise()
               .then(response => {
                 var token = response.headers.get('x-auth-token');
@@ -51,7 +53,7 @@ export class UserService {
 
   getCurrentUser() {
     return new Promise((resolve, reject) => {
-      return this.http.get(`http://localhost:3000/api/v1/auth/me`).toPromise().then(response => {
+      return this.http.get(this.server + '/me').toPromise().then(response => {
         resolve(response.json());
       }).catch(() => reject());
     });
